@@ -1,0 +1,4 @@
+{
+    "backbone_name": "tf_efficientnet_b3", "num_classes": 14
+    , "image_size": [768, 768]
+}

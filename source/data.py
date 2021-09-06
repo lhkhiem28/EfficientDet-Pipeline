@@ -28,7 +28,7 @@ class ObjectDetectionDataset(torch.utils.data.Dataset):
             image = cv2.rectangle(
                 image, 
                 (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), 
-                color=self.class_colors[clses[i]-1], 
+                color=self.class_colors[int(clses[i]-1)], 
                 thickness=3
             )
         plt.imshow(image)
