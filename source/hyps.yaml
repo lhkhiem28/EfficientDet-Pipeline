@@ -1,0 +1,11 @@
+
+device: "cuda"
+num_workers: 4
+batch_size: 6
+backbone_name: "tf_efficientnet_b3"
+image_size: 768
+lr: 3e-4
+epochs: 30
+conf_threshold: 1e-4
+iou_threshold: 0.4
+ckps_path: "../ckps"
