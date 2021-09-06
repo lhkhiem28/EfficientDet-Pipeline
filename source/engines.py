@@ -79,3 +79,36 @@ def train_fn(
                 torch.save(model.state_dict(), "{}/{}.pt".format(ckps_path, model.config.name))
 
     print("Finish-Best val-ap: {:.4f}".format(best_ap))
+
+def test_fn(
+    test_loader, model, device, 
+    conf_threshold, 
+    iou_threshold, 
+):
+    model.to(device)
+
+    with torch.no_grad():
+        model.eval()
+        running_loss = 0.0
+        running_detections, running_targets = [], []
+        for batch_images, batch_targets in tqdm.tqdm(test_loader):
+            batch_targets["bbox"] = [batch_targets_bboxes[:, [1, 0, 3, 2]] for batch_targets_bboxes in batch_targets["bbox"]]
+            batch_images, batch_targets = forward_device([batch_images, batch_targets], device)
+
+            batch_outputs = model(batch_images, batch_targets)
+            batch_loss, batch_detections = batch_outputs["loss"], batch_outputs["detections"].detach()
+
+            batch_targets["bbox"] = [batch_targets_bboxes[:, [1, 0, 3, 2]] for batch_targets_bboxes in batch_targets["bbox"]]
+            batch_detections, batch_targets = forward_device([batch_detections, batch_targets], torch.device("cpu"))
+
+            running_loss = running_loss + batch_loss.item()*batch_images.size(0)
+            running_detections.append(batch_detections), running_targets.append(batch_targets)
+
+    test_loss = running_loss/len(test_loader.dataset)
+    test_ap = get_coco_stats(
+        running_detections, running_targets
+        , conf_threshold
+        , iou_threshold
+    )["AP_all_IOU_0_50"]
+    print("{}-loss: {:.4f}".format("test", test_loss))
+    print("{}-ap: {:.4f}".format("test", test_ap))
