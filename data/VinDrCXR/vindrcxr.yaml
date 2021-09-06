@@ -1,0 +1,23 @@
+
+train_annotations_path: ../data/VinDrCXR/annotations/full_union_train.json
+val_annotations_path: ../data/VinDrCXR/annotations/full_union_val.json
+train_images_path: ../data/VinDrCXR/images/train
+val_images_path: ../data/VinDrCXR/images/val
+
+num_classes: 14
+class_names: [
+  "Aortic enlargement", 
+  "Atelectasis", 
+  "Calcification", 
+  "Cardiomegaly", 
+  "Consolidation", 
+  "ILD", 
+  "Infiltration", 
+  "Lung Opacity", 
+  "Nodule/Mass", 
+  "Other lesion", 
+  "Pleural effusion", 
+  "Pleural thickening", 
+  "Pneumothorax", 
+  "Pulmonary fibrosis", 
+]
