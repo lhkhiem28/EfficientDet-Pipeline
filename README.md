@@ -66,7 +66,6 @@ ckps_path: "../ckps"
 ```
 
 ### **5. Run**
-
 Main commands:
 ```bash
 cd source/
@@ -76,7 +75,6 @@ python train.py --data_file "../data/VinDrCXR/vindrcxr.yaml" --hyps_file "hyps.y
 # Test
 python test.py --data_file "../data/VinDrCXR/vindrcxr.yaml" --hyps_file "hyps.yaml"
 ```
-
 For inference:
 ```bash
 python detect.py --data_file "../data/VinDrCXR/vindrcxr.yaml"\
