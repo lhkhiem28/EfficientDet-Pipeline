@@ -41,12 +41,12 @@ class_names: [
 
 ### **2. Organize annotations**
 Organize your `train` / `val` / `test` annotation files to the dictionary format, with one `*.json` file per set. The `*.json` file specifications are:
-- One item per image
-- Each item is a list of sub-dictionaries, one sub-dictionary per object
-- Each sub-dictionary contains `"bbox"` in `x_min`, `y_min`, `x_max`, `y_max` format, and `"cls"`, which starts from 1.
+- One item per image.
+- Each item is a list of sub-dictionaries, one sub-dictionary per object.
+- Each sub-dictionary contains `"bbox"` in [`x_min`, `y_min`, `x_max`, `y_max`] format, and `"cls"`, which starts from 1.
 
 ### **3. Select a EfficientNet backbone**
-Define a pretrained EfficientDet `d*` model by selecting the corresponding EfficientNet `b*` backbone.
+Define a pretrained EfficientDet `d*` model by selecting the corresponding EfficientNet `b*` backbone (from `b0` to `b7`).
 > <img src="imgs/coco-results.png" width="600" />
 
 ### **4. Put hyperparameters in the config file**
