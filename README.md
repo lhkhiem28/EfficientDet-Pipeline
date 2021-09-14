@@ -38,3 +38,50 @@ class_names: [
   "Pulmonary fibrosis", 
 ]
 ```
+
+### **2. Organize annotations**
+Organize your `train` / `val` / `test` annotation files to the dictionary format, with one `*.json` file per set. The `*.json` file specifications are:
+- One item per image
+- Each item is a list of sub-dictionaries, one sub-dictionary per object
+- Each sub-dictionary contains `"bbox"` in `x_min`, `y_min`, `x_max`, `y_max` format, and `"cls"`, which starts from 1.
+
+### **3. Select a EfficientNet backbone**
+Define a pretrained EfficientDet `d*` model by selecting the corresponding EfficientNet `b*` backbone.
+> <img src="imgs/coco-results.png" width="600" />
+
+### **4. Put hyperparameters in the config file**
+[source/hyps.yaml](source/hyps.yaml), shown below, is the hyperparameters config file:
+```bash
+
+device: "cuda"
+num_workers: 4
+batch_size: 6
+backbone_name: "tf_efficientnet_b3"
+image_size: 768
+lr: 3e-4
+epochs: 30
+conf_threshold: 1e-4
+iou_threshold: 0.4
+ckps_path: "../ckps"
+```
+
+### **5. Run**
+
+Main commands:
+```bash
+cd source/
+
+# Train
+python train.py --data_file "../data/VinDrCXR/vindrcxr.yaml" --hyps_file "hyps.yaml"
+# Test
+python test.py --data_file "../data/VinDrCXR/vindrcxr.yaml" --hyps_file "hyps.yaml"
+```
+
+For inference:
+```bash
+python detect.py --data_file "../data/VinDrCXR/vindrcxr.yaml"\
+--basic_config_path "../ckps/tf_efficientdet_d3.json" --ckp_path "../ckps/tf_efficientdet_d3.pt" --device "cuda"\
+--conf_threshold 1e-4\
+--iou_threshold 0.4\
+--detect_path "../ckps/detect"\
+```
