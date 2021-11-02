@@ -77,6 +77,7 @@ python test.py --data_file "../data/VinDrCXR/vindrcxr.yaml" --hyps_file "hyps.ya
 ```
 For inference:
 ```bash
+cd source/
 python detect.py --data_file "../data/VinDrCXR/vindrcxr.yaml"\
 --basic_config_path "../ckps/tf_efficientdet_d3.json" --ckp_path "../ckps/tf_efficientdet_d3.pt" --device "cuda"\
 --conf_threshold 1e-4\
